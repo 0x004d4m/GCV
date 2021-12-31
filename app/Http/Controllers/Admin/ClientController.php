@@ -34,14 +34,6 @@ class ClientController extends CrudController
         $this->crud->addField(['name' => 'username', 'type' => 'text', 'label' => 'Username']);
         $this->crud->addField(['name' => 'password', 'type' => 'password', 'label' => 'Password']);
         $this->crud->addField(['name' => 'name', 'type' => 'text', 'label' => 'Name']);
-        $this->crud->addField([
-            'name' => 'category_id', 
-            'type' => 'select', 
-            'label' => 'Category',
-            'entity' => 'category', 
-            'model'     => "App\Models\category", 
-            'attribute' => 'name',
-        ]);
     }
     protected function setupUpdateOperation()
     {
@@ -49,13 +41,5 @@ class ClientController extends CrudController
 
         $this->crud->setValidation(ClientUpdateRequest::class);
         $this->crud->addField(['name' => 'name', 'type' => 'text', 'label' => 'Name']);
-        $this->crud->addField([
-            'name' => 'category_id', 
-            'type' => 'select', 
-            'label' => 'Category',
-            'entity' => 'category', 
-            'model'     => "App\Models\category", 
-            'attribute' => 'name',
-        ]);
     }
 }

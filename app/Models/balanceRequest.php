@@ -18,7 +18,19 @@ class balanceRequest extends Model
     protected $fillable = [
         'image',
         'amount',
-        'status',
+        'balance_status_id',
         'client_id'
     ];
+
+    protected $attributes = [
+        'image'=>'/uploads/addedByAdmin.jpg'
+    ];
+
+    public function balance_status(){
+        return $this->belongsTo(balanceStatus::class,'balance_status_id','id');
+    }
+
+    public function client(){
+        return $this->belongsTo(client::class,'client_id','id');
+    }
 }

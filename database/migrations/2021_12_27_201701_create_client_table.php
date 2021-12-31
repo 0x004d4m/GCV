@@ -21,9 +21,6 @@ class CreateClientTable extends Migration
             $table->text('name');
             $table->integer('currentCredit')->default(0);
 
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('category');
-
             $table->timestamps();
             $table->softDeletes();
         });

@@ -6,16 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class wallet extends Model
+class cardStatus extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
-    protected $table = 'wallet';
+    
+    protected $table = 'card_status';
 
     protected $fillable = [
-        'credit',
-        'client_id',
-        'balance_request_id'
+        'status'
     ];
 }

@@ -16,7 +16,9 @@ class CreateBalanceRequestTable extends Migration
             $table->bigIncrements('id');
             $table->text('image');
             $table->integer('amount');
-            $table->integer('status');// 0 pending, 1 accepted, 2 rejected
+
+            $table->unsignedBigInteger('balance_status_id');
+            $table->foreign('balance_status_id')->references('id')->on('balance_status');
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('client');

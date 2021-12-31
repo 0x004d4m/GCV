@@ -18,4 +18,6 @@ Route::group([
 ], function () {
     Route::crud('client', 'ClientController');
     Route::crud('category', 'CategoryController');
+    Route::crud('card', 'CardController');
+    Route::crud('balanceRequest', 'BalanceRequestController');
 }); 

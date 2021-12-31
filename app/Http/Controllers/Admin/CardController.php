@@ -6,15 +6,9 @@ use Illuminate\Http\Request;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
-use App\Http\Requests\Admin\client\{CategoryRequest,CategoryUpdateRequest};
-
-class CardController extends Controller
+class CardController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     public function setup() 
     {
@@ -25,16 +19,21 @@ class CardController extends Controller
     protected function setupListOperation()
     {
         $this->crud->setFromDb();
-    }
-    protected function setupCreateOperation()
-    {
-        $this->crud->setValidation(CategoryRequest::class);
-        $this->crud->addField(['name' => 'name', 'type' => 'text', 'label' => 'Name']);
-        $this->crud->addField(['name' => 'value', 'type' => 'number', 'label' => 'Value']);
-    }
-    protected function setupUpdateOperation()
-    {
-        $this->crud->setValidation(CategoryUpdateRequest::class);
-        $this->crud->addField(['name' => 'value', 'type' => 'number', 'label' => 'Value']);
+        $this->crud->setColumnDetails('card_status_id',[
+            'label' => "Status",
+            'type' => "select_from_array",
+            'name' => 'card_status_id',
+            'options' => [1 => '<span class="badge badge-success">Not Used</span>', 2 => '<span class="badge badge-secondary">Used</span>'],
+            'escaped'=> false
+        ]);
+        
+        $this->crud->setColumnDetails('category_id',[
+            'label' => "Category", // Table column heading
+            'type' => "relationship",
+            'name' => 'category_id', // the column that contains the ID of that connected entity;
+            'entity' => 'category', // the method that defines the relationship in your Model
+            'attribute' => "name", // foreign key attribute that is shown to user
+            'model' => 'App\Models\category' // foreign key model
+        ]);
     }
 }

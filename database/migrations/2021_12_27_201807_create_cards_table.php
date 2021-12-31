@@ -16,7 +16,9 @@ class CreateCardsTable extends Migration
             $table->bigIncrements('id');
             $table->text('serial')->unique();
             $table->text('code');
-            $table->integer('status');//0 used, 1 new
+
+            $table->unsignedBigInteger('card_status_id');
+            $table->foreign('card_status_id')->references('id')->on('card_status');
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('category');

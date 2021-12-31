@@ -21,8 +21,7 @@ class client extends Model
         'username',
         'password',
         'name',
-        'currentCredit',
-        'category_id'
+        'currentCredit'
     ];
 
     public function category(){

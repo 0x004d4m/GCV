@@ -6,12 +6,22 @@
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{{ backpack_url('category') }}">
-        <i class="la la-user nav-icon"></i> Categories
+        <i class="la la-tags nav-icon"></i> Categories
     </a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{{ backpack_url('client') }}">
         <i class="la la-user nav-icon"></i> Clients
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ backpack_url('balanceRequest') }}">
+        <i class="la la-money nav-icon"></i> Balance Requests
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ backpack_url('card') }}">
+        <i class="la la-credit-card nav-icon"></i> Cards
     </a>
 </li>
 @if(backpack_user()->hasRole('SuperAdmin'))

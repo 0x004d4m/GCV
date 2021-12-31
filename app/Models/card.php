@@ -18,7 +18,7 @@ class card extends Model
     protected $fillable = [
         'serial',
         'code',
-        'status',
+        'card_status_id',
         'category_id'
     ];
 
