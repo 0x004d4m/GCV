@@ -19,7 +19,7 @@ class CreateClientTable extends Migration
             $table->string('username')->unique();
             $table->text('password');
             $table->text('name');
-            $table->integer('currentCredit')->default(0);
+            $table->float('currentCredit', 8, 2)->default(0);
             $table->text('token');
 
             $table->timestamps();

@@ -54,53 +54,57 @@ class CardController extends Controller
     {
         if($request->category_id !="" && $request->quantity!="" && $request->quantity > 0 && $request->quantity > 0 && ((category::select('*')->where('id',$request->category_id)->count())>0)){
             $client = client::select('*')->where('token',$request->header('Authorization'))->first();
-            $category = category::select('*')->where('id',$request->category_id)->first();
-            $price = ($request->quantity * $category['value'] );
-            if($client['currentCredit'] >= $price){
-                $pdf_list=[];
-                for($i=0;$i<$request->quantity;$i++){
-                    $path = public_path('cards/');
-                    $fileName = time() +$i . '.' . 'pdf' ;
-                    $code=generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(2);
-                    while(true){
-                        $cardCheck = card::select()->where('code',$code)->count();
-                        if($cardCheck==0){
-                            break;
-                        }
+            $category = category::select('*')->where('id',$request->category_id)->where('client_id',$client['id'])->first();
+            if( $category != null ){
+                $price = ( $request->quantity * $category['value'] ) * 0.05;
+                if($client['currentCredit'] >= $price){
+                    $pdf_list=[];
+                    for($i=0;$i<$request->quantity;$i++){
+                        $path = public_path('cards/');
+                        $fileName = time() +$i . '.' . 'pdf' ;
                         $code=generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(2);
-                    }
-                    $serial = generateRandomString(11);
-                    while(true){
-                        $cardCheck2 = card::select()->where('serial',$serial)->count();
-                        if($cardCheck2==0){
-                            break;
+                        while(true){
+                            $cardCheck = card::select()->where('code',$code)->count();
+                            if($cardCheck==0){
+                                break;
+                            }
+                            $code=generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(4)."-".generateRandomString(2);
                         }
                         $serial = generateRandomString(11);
+                        while(true){
+                            $cardCheck2 = card::select()->where('serial',$serial)->count();
+                            if($cardCheck2==0){
+                                break;
+                            }
+                            $serial = generateRandomString(11);
+                        }
+                        $card = card::create([
+                            'serial' => $serial ,
+                            'code' => $code,
+                            'card_status_id' => 1,
+                            'category_id' => $request->category_id,
+                            'client_id' => $client['id'],
+                            'pdf_path' => "cards/" .$fileName,
+                        ]);
+            
+                        if($card != null){
+                            $card['order'] = card::select()->where('client_id',$client['id'])->count();
+                            $card['date']=date('d-m-Y');
+                            $card['time']=date('h:i:s a');
+                            $card['price']=$category['value'];
+                            $customPaper = array(0,0,240,198.425);
+                            $pdf = PDF::loadView('card.layout',compact('card'))->setPaper($customPaper, 'landscape');
+                            $pdf->save($path . $fileName);
+                            array_push($pdf_list, env("APP_URL") . $card['pdf_path']);
+                        }
                     }
-                    $card = card::create([
-                        'serial' => $serial ,
-                        'code' => $code,
-                        'card_status_id' => 1,
-                        'category_id' => $request->category_id,
-                        'client_id' => $client['id'],
-                        'pdf_path' => "cards/" .$fileName,
-                    ]);
-        
-                    if($card != null){
-                        $card['order'] = card::select()->where('client_id',$client['id'])->count();
-                        $card['date']=date('d-m-Y');
-                        $card['time']=date('h:i:s a');
-                        $card['price']=$category['value'];
-                        $customPaper = array(0,0,240,198.425);
-                        $pdf = PDF::loadView('card.layout',compact('card'))->setPaper($customPaper, 'landscape');
-                        $pdf->save($path . $fileName);
-                        array_push($pdf_list, env("APP_URL") . $card['pdf_path']);
-                    }
+                    $client->update(['currentCredit' => ( $client['currentCredit'] - $price )]);
+                    return response()->json(["PDF_URL"=>$pdf_list],201);
+                }else{
+                    return response()->json(["Error"=>"Balance_Not_enough"],409);
                 }
-                $client->update(['currentCredit' => ( $client['currentCredit'] - $price )]);
-                return response()->json(["PDF_URL"=>$pdf_list],201);
             }else{
-                return response()->json(["Error"=>"Balance_Not_enough"],409);
+                return response()->json(["Error"=>"Missing_Parameter"],409);
             }
         }else{
             return response()->json(["Error"=>"Missing_Parameter"],409);

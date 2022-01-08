@@ -23,6 +23,15 @@ class CategoryController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->setFromDb();
+        
+        $this->crud->setColumnDetails('client_id',[
+            'label' => "Client", // Table column heading
+            'type' => "relationship",
+            'name' => 'client_id', // the column that contains the ID of that connected entity;
+            'entity' => 'client', // the method that defines the relationship in your Model
+            'attribute' => "name", // foreign key attribute that is shown to user
+            'model' => 'App\Models\client' // foreign key model
+        ]);
     }
     protected function setupCreateOperation()
     {

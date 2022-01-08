@@ -21,8 +21,13 @@ class category extends Model
     ];
 
     protected $hidden = [
+        'client_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    public function client(){
+        return $this->belongsTo(client::class);
+    }
 }
