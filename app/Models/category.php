@@ -17,11 +17,12 @@ class category extends Model
 
     protected $fillable = [
         'name',
-        'value'
+        'value',
+        'client_id',
     ];
 
     protected $hidden = [
-        'client_id',
+        
         'created_at',
         'updated_at',
         'deleted_at',

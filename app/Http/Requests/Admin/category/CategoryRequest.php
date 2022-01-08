@@ -27,7 +27,8 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:1S|max:255|unique:category',
-            'value' => 'required|integer'
+            'value' => 'required|integer',
+            'client_id' => 'required|integer'
         ];
     }
 

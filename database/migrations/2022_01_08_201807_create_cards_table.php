@@ -15,7 +15,7 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('serial')->unique();
-            $table->text('code')->unique();
+            $table->string('code')->unique();
             $table->text('pdf_path');
 
             $table->unsignedBigInteger('card_status_id');

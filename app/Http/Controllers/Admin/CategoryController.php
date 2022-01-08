@@ -38,5 +38,13 @@ class CategoryController extends CrudController
         $this->crud->setValidation(CategoryRequest::class);
         $this->crud->addField(['name' => 'name', 'type' => 'text', 'label' => 'Name']);
         $this->crud->addField(['name' => 'value', 'type' => 'number', 'label' => 'Value']);
+        $this->crud->addField([
+            'name' => 'client_id', 
+            'type' => 'select', 
+            'label' => 'Client',
+            'entity' => 'client', 
+            'model'     => "App\Models\client", 
+            'attribute' => 'name',
+        ]);
     }
 }
