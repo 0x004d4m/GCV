@@ -15,7 +15,7 @@ class CreateBalanceStatus extends Migration
     {
         Schema::create('balance_status', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('status')->unique();
+            $table->string('status')->unique();
             $table->timestamps();
         });
     }

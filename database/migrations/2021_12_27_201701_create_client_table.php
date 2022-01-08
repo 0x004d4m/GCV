@@ -14,9 +14,9 @@ class CreateClientTable extends Migration
     {
         Schema::create('client', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('phone')->unique();
-            $table->text('email')->unique();
-            $table->text('username')->unique();
+            $table->string('phone',255)->unique();
+            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->text('password');
             $table->text('name');
             $table->integer('currentCredit')->default(0);
