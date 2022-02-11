@@ -28,17 +28,10 @@ class CardController extends Controller
         return response()->json($cards, 200);
     }
 
-<<<<<<< HEAD
-    public function show(Request $request,$serial)
-    {
-        $client = client::select('*')->where('token',$request->header('Authorization'))->first();
-        $card= card::select('*')->where('serial',$serial)->where('client_id',$client['id'])->get()->first();
-=======
     public function show(Request $request,$code)
     {
         $client = client::select('*')->where('token',$request->header('Authorization'))->first();
         $card= card::select('*')->where('code',$code)->where('client_id',$client['id'])->get()->first();
->>>>>>> new
         if($card!=null){
             return response()->json($card, 200);
         }else{
@@ -93,7 +86,7 @@ class CardController extends Controller
                             'client_id' => $client['id'],
                             'pdf_path' => "cards/" .$fileName,
                         ]);
-            
+
                         if($card != null){
                             $card['order'] = card::select()->where('client_id',$client['id'])->count();
                             $card['date']=date('d-m-Y');
@@ -117,9 +110,7 @@ class CardController extends Controller
             return response()->json(["Error"=>"Missing_Parameter"],409);
         }
     }
-<<<<<<< HEAD
-=======
-    
+
     public function useCard(Request $request){
         $client = client::select('*')->where('token',$request->header('Authorization'))->first();
         $card= card::select('*')->where('code',$request->cardNumber)->where('client_id',$client['id'])->get()->first();
@@ -134,5 +125,4 @@ class CardController extends Controller
             return response()->json(json_decode('{}'), 404);
         }
     }
->>>>>>> new
 }

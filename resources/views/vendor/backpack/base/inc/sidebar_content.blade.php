@@ -6,16 +6,6 @@
     </a>
 </li>
 @endif
-<<<<<<< HEAD
-@if(backpack_user()->can('Manage Categories'))
-<li class="nav-item">
-    <a class="nav-link" href="{{ backpack_url('category') }}">
-        <i class="la la-tags nav-icon"></i> Categories
-    </a>
-</li>
-@endif
-=======
->>>>>>> new
 @if(backpack_user()->can('Manage Clients'))
 <li class="nav-item">
     <a class="nav-link" href="{{ backpack_url('client') }}">
@@ -23,8 +13,6 @@
     </a>
 </li>
 @endif
-<<<<<<< HEAD
-=======
 @if(backpack_user()->can('Manage Categories'))
 <li class="nav-item">
     <a class="nav-link" href="{{ backpack_url('category') }}">
@@ -32,7 +20,6 @@
     </a>
 </li>
 @endif
->>>>>>> new
 @if(backpack_user()->can('Manage Balance Requests'))
 <li class="nav-item">
     <a class="nav-link" href="{{ backpack_url('balanceRequest') }}">

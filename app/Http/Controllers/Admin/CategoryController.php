@@ -14,7 +14,7 @@ class CategoryController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
-    public function setup() 
+    public function setup()
     {
         $this->crud->setModel("App\Models\category");
         $this->crud->setRoute("admin/category");
@@ -23,7 +23,7 @@ class CategoryController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->setFromDb();
-        
+
         $this->crud->setColumnDetails('client_id',[
             'label' => "Client", // Table column heading
             'type' => "relationship",
@@ -38,16 +38,13 @@ class CategoryController extends CrudController
         $this->crud->setValidation(CategoryRequest::class);
         $this->crud->addField(['name' => 'name', 'type' => 'text', 'label' => 'Name']);
         $this->crud->addField(['name' => 'value', 'type' => 'number', 'label' => 'Value']);
-<<<<<<< HEAD
-=======
-        
->>>>>>> new
+
         $this->crud->addField([
-            'name' => 'client_id', 
-            'type' => 'select', 
+            'name' => 'client_id',
+            'type' => 'select',
             'label' => 'Client',
-            'entity' => 'client', 
-            'model'     => "App\Models\client", 
+            'entity' => 'client',
+            'model'     => "App\Models\client",
             'attribute' => 'name',
         ]);
     }
