@@ -20,4 +20,6 @@ Route::group([
     Route::crud('category', 'CategoryController');
     Route::crud('card', 'CardController');
     Route::crud('balanceRequest', 'BalanceRequestController');
-}); 
+    Route::put('balanceRequest/reject/{id}', 'BalanceRequestController@reject');
+    Route::put('balanceRequest/approve/{id}', 'BalanceRequestController@approve');
+});

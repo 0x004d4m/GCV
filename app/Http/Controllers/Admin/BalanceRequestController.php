@@ -13,7 +13,7 @@ class BalanceRequestController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 
-    public function setup() 
+    public function setup()
     {
         $this->crud->setModel("App\Models\balanceRequest");
         $this->crud->setRoute("admin/balanceRequest");
@@ -25,7 +25,7 @@ class BalanceRequestController extends CrudController
         $this->crud->setColumnDetails('image',[
             'label' => "Image", // Table column heading
             'type' => "image",
-            'name' => 'image', 
+            'name' => 'image',
         ]);
         $this->crud->setColumnDetails('balance_status_id',[
             'label' => "Status",
@@ -42,28 +42,49 @@ class BalanceRequestController extends CrudController
             'attribute' => "name", // foreign key attribute that is shown to user
             'model' => 'App\Models\client' // foreign key model
         ]);
+
+        $this->crud->addButtonFromView('line', 'approve', 'approve', 'beginning');
+        $this->crud->addButtonFromView('line', 'reject', 'reject', 'beginning');
     }
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(CreateBalanceRequest::class);
         $this->crud->addField(['name' => 'amount', 'type' => 'number', 'label' => 'Amount']);
-        
+
         $this->crud->addField([
-            'name' => 'client_id', 
-            'type' => 'select', 
+            'name' => 'client_id',
+            'type' => 'select',
             'label' => 'Client',
-            'entity' => 'client', 
-            'model'     => "App\Models\client", 
+            'entity' => 'client',
+            'model'     => "App\Models\client",
             'attribute' => 'name',
         ]);
-        
+
         $this->crud->addField([
-            'name' => 'balance_status_id', 
-            'type' => 'select', 
+            'name' => 'balance_status_id',
+            'type' => 'select',
             'label' => 'Status',
-            'entity' => 'balance_status', 
-            'model'     => "App\Models\balanceStatus", 
+            'entity' => 'balance_status',
+            'model'     => "App\Models\balanceStatus",
             'attribute' => 'status',
         ]);
+    }
+    protected function reject($id)
+    {
+        try {
+            \App\Models\BalanceRequest::find($id)->update(['balance_status_id'=>3]);
+            return response()->json([], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([], 400);
+        }
+    }
+    protected function approve($id)
+    {
+        try {
+            \App\Models\BalanceRequest::find($id)->update(['balance_status_id'=>2]);
+            return response()->json([], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([], 400);
+        }
     }
 }

@@ -10,7 +10,7 @@ class CardController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 
-    public function setup() 
+    public function setup()
     {
         $this->crud->setModel("App\Models\backpackCard");
         $this->crud->setRoute("admin/card");
@@ -26,7 +26,7 @@ class CardController extends CrudController
             'options' => [1 => '<span class="badge badge-success">Not Used</span>', 2 => '<span class="badge badge-secondary">Used</span>'],
             'escaped'=> false
         ]);
-        
+
         $this->crud->setColumnDetails('category_id',[
             'label' => "Category", // Table column heading
             'type' => "relationship",
@@ -35,7 +35,7 @@ class CardController extends CrudController
             'attribute' => "name", // foreign key attribute that is shown to user
             'model' => 'App\Models\category' // foreign key model
         ]);
-        
+
         $this->crud->setColumnDetails('client_id',[
             'label' => "Client", // Table column heading
             'type' => "relationship",
@@ -47,8 +47,8 @@ class CardController extends CrudController
 
         $this->crud->setColumnDetails('pdf_path',[
             'label' => "PDF Path", // Table column heading
-            'type' => "image",
-            'name' => 'pdf_path', 
+            'type' => "link",
+            'name' => 'pdf_path',
         ]);
     }
 }

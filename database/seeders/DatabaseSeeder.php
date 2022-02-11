@@ -35,11 +35,11 @@ class DatabaseSeeder extends Seeder
             'id' => 3,
             'status' => 'Rejected'
         ]);
-        // DB::table('users')->insert([
-        //     'id' => 1,
-        //     'name' => 'Admin',
-        //     'email' => 'admin@gcv.com',
-        //     'password' => Hash::make('Admin1234')
-        // ]);
+        DB::table('users')->insert([
+            'id' => 1,
+            'name' => 'Admin',
+            'email' => 'admin@gcv.com',
+            'password' => Hash::make('Admin1234')
+        ]);
     }
 }
