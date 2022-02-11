@@ -21,6 +21,7 @@ Route::group([
         Route::get('{serial}/', [CardController::class, 'show']);
         Route::get('{serial}/print', [CardController::class, 'print']);
         Route::post('/', [CardController::class, 'save']); // category, quantity, auth, return PDF of Generated Cards
+        Route::post('/use', [CardController::class, 'useCard']);
     });
 
     Route::group([

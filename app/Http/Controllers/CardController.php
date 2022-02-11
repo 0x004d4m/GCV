@@ -28,10 +28,17 @@ class CardController extends Controller
         return response()->json($cards, 200);
     }
 
+<<<<<<< HEAD
     public function show(Request $request,$serial)
     {
         $client = client::select('*')->where('token',$request->header('Authorization'))->first();
         $card= card::select('*')->where('serial',$serial)->where('client_id',$client['id'])->get()->first();
+=======
+    public function show(Request $request,$code)
+    {
+        $client = client::select('*')->where('token',$request->header('Authorization'))->first();
+        $card= card::select('*')->where('code',$code)->where('client_id',$client['id'])->get()->first();
+>>>>>>> new
         if($card!=null){
             return response()->json($card, 200);
         }else{
@@ -110,4 +117,22 @@ class CardController extends Controller
             return response()->json(["Error"=>"Missing_Parameter"],409);
         }
     }
+<<<<<<< HEAD
+=======
+    
+    public function useCard(Request $request){
+        $client = client::select('*')->where('token',$request->header('Authorization'))->first();
+        $card= card::select('*')->where('code',$request->cardNumber)->where('client_id',$client['id'])->get()->first();
+        if($card!=null){
+            if($card->card_status_id==1){
+                $card->update(['card_status_id'=>2]);
+                return response()->json(json_decode('{}'), 200);
+            }else{
+                return response()->json(json_decode('{}'), 409);
+            }
+        }else{
+            return response()->json(json_decode('{}'), 404);
+        }
+    }
+>>>>>>> new
 }

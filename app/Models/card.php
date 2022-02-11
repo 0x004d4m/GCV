@@ -30,6 +30,10 @@ class card extends Model
         'deleted_at',
     ];
 
+    public function cardStatus(){
+        return $this->belongsTo(cardStatus::class);
+    }
+
     public function category(){
         return $this->belongsTo(category::class);
     }
@@ -43,9 +47,10 @@ class card extends Model
             'serial' => $this->serial,
             'code' => $this->code,
             'category_id' => $this->category_id,
-            'pdf_path' =>  env("APP_URL")."cards/".$this->pdf_path,
+            'pdf_path' =>  env("APP_URL",'http://gcv.dev-pool.com/').$this->pdf_path,
             'category_name' => $this->category->name,
-            'category_value' => $this->category->value
+            'category_value' => $this->category->value,
+            'status' => $this->cardStatus->status
         ];
     }
 }
